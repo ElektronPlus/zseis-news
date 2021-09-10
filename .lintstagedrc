@@ -1,0 +1,6 @@
+{
+  "**/*.+(css|less|scss|ts|tsx|md)": [
+    "npx ts-standard --fix",
+    "git add"
+  ]
+}

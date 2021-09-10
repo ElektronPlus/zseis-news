@@ -1,0 +1,34 @@
+{
+  "name": "zseis-news",
+  "version": "1.0.0",
+  "description": "🏫 Fetch news from zseis.zgora.pl and distribute them!",
+  "main": "dist/main.js",
+  "scripts": {
+    "test": "standard",
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "prepare": "husky install",
+    "typecheck": "tsc --noEmit",
+    "lint": "standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/konhi/zseis-news.git"
+  },
+  "author": "konhi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/konhi/zseis-news/issues"
+  },
+  "homepage": "https://github.com/konhi/zseis-news#readme",
+  "dependencies": {
+    "discord.js": "^13.1.0",
+    "jsdom": "^17.0.0"
+  },
+  "devDependencies": {
+    "husky": "^7.0.2",
+    "lint-staged": "^11.1.2",
+    "ts-standard": "^10.0.0",
+    "typescript": "^4.4.2"
+  }
+}
