@@ -26,7 +26,7 @@ async function getElements (dom: Document): Promise<NodeListMap> {
 }
 
 /** Remove text from date */
-async function parseDateModified (date: Node) {
+async function parseDateModified (date: Node): Promise<string> {
   const text = date.textContent
 
   return text !== null ? text.replace('Ostatnio zmodyfikowany: ', '') : ''
