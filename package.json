@@ -4,12 +4,12 @@
   "description": "🏫 Fetch news from zseis.zgora.pl and distribute them!",
   "main": "dist/main.js",
   "scripts": {
-    "test": "standard",
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "prepare": "husky install",
+    "test": "npx ts-standard --fix",
+    "build": "npx tsc",
+    "dev": "npx tsc --watch",
+    "prepare": "npx husky install",
     "typecheck": "tsc --noEmit",
-    "lint": "standard"
+    "lint": "npx ts-standard --fix"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@
     "jsdom": "^17.0.0"
   },
   "devDependencies": {
+    "@types/jsdom": "^16.2.13",
     "husky": "^7.0.2",
     "lint-staged": "^11.1.2",
     "ts-standard": "^10.0.0",
