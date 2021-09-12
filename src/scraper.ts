@@ -12,6 +12,7 @@ const SELECTORS = {
 }
 
 const HOSTNAME = 'https://zseis.zgora.pl/'
+const NEWS_PER_PAGE = 4
 
 /** Return elements */
 async function getElements (dom: Document): Promise<NodeListMap> {
@@ -39,7 +40,7 @@ export async function getArticles () {
 
   const elements = await getElements(dom)
 
-  for (let i = 0; i < 4; i++) {
+  for (const i of Array(NEWS_PER_PAGE).keys()) {
     newsList.push({
       title: elements.title[i].textContent,
       content: elements.content[i].textContent,
