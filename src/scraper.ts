@@ -19,19 +19,14 @@ async function getElements (dom: Document): Promise<NodeListMap> {
   const elements: NodeListMap = {}
 
   for (const selector in SELECTORS) {
-    // @ts-ignore
+    // @ts-expect-error
     elements[selector] = dom.querySelectorAll(SELECTORS[selector])
   }
 
   return elements
 }
 
-/** Remove text from date */
-async function parseDateModified (date: Node): Promise<string> {
-  const text = date.textContent
 
-  return text !== null ? text.replace('Ostatnio zmodyfikowany: ', '') : ''
-}
 
 /** Return 4 latest news containing title, content, image and last modified date. */
 export async function getArticles (): Promise<News[]> {
@@ -45,9 +40,9 @@ export async function getArticles (): Promise<News[]> {
     newsList.push({
       title: elements.title[i].textContent,
       content: elements.content[i].textContent,
-      // @ts-ignore
+      // @ts-expect-error
       image: elements.image[i].src,
-      dateModified: await parseDateModified(elements.dateModified[i])
+      dateModified: elements.dateModified[i].textContent
     })
   }
 
