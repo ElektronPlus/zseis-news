@@ -1,3 +1,3 @@
 import { getArticles } from './scraper'
 
-getArticles()
+getArticles().then((articles => console.log(articles)))

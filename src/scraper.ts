@@ -33,7 +33,7 @@ async function parseDateModified (date: Node): Promise<string> {
 }
 
 /** Return 4 latest news containing title, content, image and last modified date. */
-export async function getArticles () {
+export async function getArticles (): Promise<News[]> {
   const html = await JSDOM.fromURL(HOSTNAME)
   const dom = html.window.document
   const newsList: News[] = []
@@ -49,5 +49,5 @@ export async function getArticles () {
     })
   }
 
-  console.log(newsList)
+  return newsList
 }
