@@ -4,6 +4,7 @@
   "description": "🏫 Fetch news from zseis.zgora.pl and distribute them!",
   "main": "dist/main.js",
   "scripts": {
+    "start": "npm run build && node dist/src/main.js",
     "test": "npx ts-standard --fix",
     "build": "npx tsc",
     "dev": "npx tsc --watch",
