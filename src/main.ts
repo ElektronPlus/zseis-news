@@ -5,4 +5,4 @@ const PATHS = {
   news: 'data/news.json',
 }
 
-getArticles().then(articles => fs.writeFileSync(PATHS.news, JSON.stringify(articles, null, 2))
+getArticles().then(articles => fs.writeFileSync(PATHS.news, JSON.stringify(articles, null, 2)))

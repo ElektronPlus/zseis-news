@@ -19,6 +19,7 @@ async function getElements (dom: Document): Promise<NodeListMap> {
   const elements: NodeListMap = {}
 
   for (const selector in SELECTORS) {
+    // @ts-ignore
     elements[selector] = dom.querySelectorAll(SELECTORS[selector])
   }
 
@@ -44,6 +45,7 @@ export async function getArticles (): Promise<News[]> {
     newsList.push({
       title: elements.title[i].textContent,
       content: elements.content[i].textContent,
+      // @ts-ignore
       image: elements.image[i].src,
       dateModified: await parseDateModified(elements.dateModified[i])
     })
