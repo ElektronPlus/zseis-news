@@ -1,8 +1,8 @@
 export interface News {
-  title: string | null
-  content: string | null
-  image: string | null
-  dateModified: string | null
+  title: string
+  content: string
+  image: string
+  dateModified: string
 }
 
 /** https://stackoverflow.com/questions/51237668/typescript-declare-that-all-properties-on-an-object-must-be-of-the-same-type */

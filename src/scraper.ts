@@ -26,7 +26,20 @@ async function getElements (dom: Document): Promise<NodeListMap> {
   return elements
 }
 
+async function getElementsData(elements: NodeListMap) {
+  let data = []
 
+  for (const [key, value] of Object.entries(elements)) {
+    for (const [k, v] of Object.entries(value)) {
+      // console.log(key, value, k, v)
+      const content = v.textContent
+      console.log(`pushing data${key} = ${k}: ${content}`)
+      data[key] = {[k]: content}
+    }
+  }
+
+  // console.log(data)
+}
 
 /** Return 4 latest news containing title, content, image and last modified date. */
 export async function getArticles (): Promise<News[]> {
@@ -35,15 +48,22 @@ export async function getArticles (): Promise<News[]> {
   const newsList: News[] = []
 
   const elements = await getElements(dom)
+  getElementsData(elements)
 
   for (const i of Array(NEWS_PER_PAGE).keys()) {
-    newsList.push({
-      title: elements.title[i].textContent,
-      content: elements.content[i].textContent,
-      // @ts-expect-error
-      image: elements.image[i].src,
-      dateModified: elements.dateModified[i].textContent
-    })
+    // const title = elements.title[i].textContent
+    // const content = elements.content[i].textContent
+    // // @ts-expect-error
+    // const image = elements.image[i].src
+    // const dateModified = elements.dateModified[i].textContent
+
+    // newsList.push({
+    //   title: title,
+    //   content: content,
+    //   // @ts-expect-error
+    //   image: image,
+    //   dateModified: dateModified,
+    // })
   }
 
   return newsList
