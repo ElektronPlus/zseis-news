@@ -1,7 +1,5 @@
-// Construction of this scraper assumes that there are only 4 articles per page. While it's naive, bad HTML structure of the website makes it hard to do it in a better way. It should be validated & tested.
-
 import { JSDOM } from 'jsdom'
-import { News, NodeListMap } from './types'
+import { News, NewsContent } from './types'
 
 // While every news can be accessed with a link, I didn't find a way to always find link/id to it. Technically it could be brute-forced but it doesn't seem to be most elegant way to do so.
 const SELECTORS = {
@@ -14,57 +12,40 @@ const SELECTORS = {
 const HOSTNAME = 'https://zseis.zgora.pl/'
 const NEWS_PER_PAGE = 4
 
-/** Return elements */
-async function getElements (dom: Document): Promise<NodeListMap> {
-  const elements: NodeListMap = {}
+/** Return list of titles, content, image, and date */
+async function getElements (dom: Document): Promise<NewsContent> {
+  const elements: NewsContent = {}
 
   for (const selector in SELECTORS) {
-    // @ts-expect-error
-    elements[selector] = dom.querySelectorAll(SELECTORS[selector])
+    const selectorElements = dom.querySelectorAll(SELECTORS[selector])
+
+    const list: string[] = []
+    for (const element of selectorElements) {
+      const content = (selector === 'image') ? element.src : element.textContent
+      list.push(content)
+    }
+
+    elements[selector] = list
   }
 
   return elements
 }
 
-async function getElementsData(elements: NodeListMap) {
-  let data = [{}, {}, {}, {}]
-
-  for (const [key, value] of Object.entries(elements)) {
-    for (const [k, v] of Object.entries(value)) {
-      const content = (key == 'image') ? v.src : v.textContent
-      const pair = {[key]: content}
-      Object.assign(data[k], pair)
-    }
-  }
-
-
-  return data
-}
-
-/** Return 4 latest news containing title, content, image and last modified date. */
+/** Return latest news containing title, content, image and last modified date. Construction of this scraper assumes that there are only 4 articles per page. While it's naive, bad HTML structure of the website makes it hard to do it in a better way. It should be validated & tested. */
 export async function getArticles (): Promise<News[]> {
   const html = await JSDOM.fromURL(HOSTNAME)
   const dom = html.window.document
   const newsList: News[] = []
 
   const elements = await getElements(dom)
-  const elementsData = await getElementsData(elements)
 
-  for (const i of Array(NEWS_PER_PAGE).keys()) {
-    // const title = elements.title[i].textContent
-    // const content = elements.content[i].textContent
-    // // @ts-expect-error
-    // const image = elements.image[i].src
-    // const dateModified = elements.dateModified[i].textContent
+  for (let i = 0; i < NEWS_PER_PAGE; i++) {
+    const news = {}
+    for (const [key, array] of Object.entries(elements)) {
+      news[key] = array[i]
+    }
 
-    // newsList.push({
-    //   title: title,
-    //   content: content,
-    //   // @ts-expect-error
-    //   image: image,
-    //   dateModified: dateModified,
-    // })
-    newsList.push(elementsData[i])
+    newsList.push(news)
   }
 
   return newsList
