@@ -1,5 +1,5 @@
 import { MessageEmbed, WebhookClient } from 'discord.js'
-import { News } from './types';
+import { News } from './types'
 
 export async function sendWebhookMessage (news: News) {
   const webhookClient = new WebhookClient({
