@@ -27,18 +27,18 @@ async function getElements (dom: Document): Promise<NodeListMap> {
 }
 
 async function getElementsData(elements: NodeListMap) {
-  let data = []
+  let data = [{}, {}, {}, {}]
 
   for (const [key, value] of Object.entries(elements)) {
     for (const [k, v] of Object.entries(value)) {
-      // console.log(key, value, k, v)
-      const content = v.textContent
-      console.log(`pushing data${key} = ${k}: ${content}`)
-      data[key] = {[k]: content}
+      const content = (key == 'image') ? v.src : v.textContent
+      const pair = {[key]: content}
+      Object.assign(data[k], pair)
     }
   }
 
-  // console.log(data)
+
+  return data
 }
 
 /** Return 4 latest news containing title, content, image and last modified date. */
@@ -48,7 +48,7 @@ export async function getArticles (): Promise<News[]> {
   const newsList: News[] = []
 
   const elements = await getElements(dom)
-  getElementsData(elements)
+  const elementsData = await getElementsData(elements)
 
   for (const i of Array(NEWS_PER_PAGE).keys()) {
     // const title = elements.title[i].textContent
@@ -64,6 +64,7 @@ export async function getArticles (): Promise<News[]> {
     //   image: image,
     //   dateModified: dateModified,
     // })
+    newsList.push(elementsData[i])
   }
 
   return newsList
