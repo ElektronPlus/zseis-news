@@ -17,6 +17,7 @@ async function getElements (dom: Document): Promise<NewsContent> {
   const elements: NewsContent = {}
 
   for (const selector in SELECTORS) {
+    // @ts-expect-error
     const selectorElements = dom.querySelectorAll(SELECTORS[selector])
 
     const list: string[] = []
@@ -45,6 +46,7 @@ export async function getArticles (): Promise<News[]> {
       news[key] = array[i]
     }
 
+    // @ts-expect-error
     newsList.push(news)
   }
 
