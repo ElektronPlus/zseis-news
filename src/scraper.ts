@@ -40,7 +40,7 @@ export async function getArticles (): Promise<News[]> {
   const elements = await getElements(dom)
 
   for (let i = 0; i < NEWS_PER_PAGE; i++) {
-    const news = {}
+    const news: {[key: string} = {}
     for (const [key, array] of Object.entries(elements)) {
       news[key] = array[i]
     }
