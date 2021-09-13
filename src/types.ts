@@ -6,6 +6,6 @@ export interface News {
 }
 
 /** https://stackoverflow.com/questions/51237668/typescript-declare-that-all-properties-on-an-object-must-be-of-the-same-type */
-export interface NodeListMap {
-  [NodeListName: string]: NodeList
+export interface NewsContent {
+  [key: string]: string[]
 }
