@@ -1,7 +1,13 @@
 # 🏫 zseis-news
 Scrape news from [school site (https://zseis.zgora.pl/)](https://zseis.zgora.pl/) and send them trough Discord!
 
-This doesn't require own hosting as it uses [:octocat: GitHub Actions](https://github.com/konhi/zseis-news/actions), but you can do so with:
+This doesn't require own hosting as it uses [:octocat: GitHub Actions](https://github.com/konhi/zseis-news/actions).
+
+*Thought...*
+## :octocat: Hosting with GitHub Actions
+Just fork the repo!
+
+## 💾 Hosting on your server
 ```
 git clone https://github.com/konhi/zseis-news.git
 cd zseis-news
