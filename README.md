@@ -20,7 +20,7 @@ Then schedule executing the script `node dist/main.js --url <DISCORD_WEBHOOK_URL
 # 📃 Roadmap
 
 1. [x] Scraper
-2. [ ] Discord Webhook
+2. [x] Discord Webhook
 3. [ ] Tests
 4. [ ] Security
 5. [ ] Style, refactoring
