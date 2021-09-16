@@ -30,11 +30,11 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build
-    - run: npm run start
+    - run: node dist/main.js --url ${{ secrets.WEBHOOK_URL }}
     - run: |-
         git diff
         git config --global user.email "actions@users.noreply.github.com"
         git config --global user.name "GitHub Actions"
         git add -A
-        git commit -m "🐱 gh actions - fetch news" || exit 0
+        git commit -m "🐱 GitHub Actions CRON" || exit 0
         git push
