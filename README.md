@@ -24,3 +24,4 @@ Then schedule executing the script `node dist/main.js --url <DISCORD_WEBHOOK_URL
 3. [ ] Tests
 4. [ ] Security
 5. [ ] Style, refactoring
+6. [ ] Logging, CLI
