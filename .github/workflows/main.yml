@@ -38,3 +38,5 @@ jobs:
         git add -A
         git commit -m "🐱 GitHub Actions CRON" || exit 0
         git push
+    env:
+      WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
