@@ -17,9 +17,10 @@ npm build
 
 Then schedule executing the script `node dist/main.js --url <DISCORD_WEBHOOK_URL>`), this GitHub implementation does that every `⏰ 5 minutes.`
 
-# 📃 To do
+# 📃 Roadmap
 
-- [x] Scraper
-- [ ] Discord Webhook
-- [ ] Tests
-- [ ] Security
+1. [x] Scraper
+2. [ ] Discord Webhook
+3. [ ] Tests
+4. [ ] Security
+5. [ ] Style, refactoring
