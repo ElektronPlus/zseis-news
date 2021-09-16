@@ -1,5 +1,5 @@
 import { JSDOM } from 'jsdom'
-import { NEWS_PER_PAGE, SELECTORS, HOSTNAME, PATHS } from './options'
+import options from './options'
 import { News, NewsContent } from './types'
 import fs from 'fs'
 import md5 from 'md5'
@@ -10,9 +10,9 @@ import md5 from 'md5'
 async function getElements (dom: Document): Promise<NewsContent> {
   const elements: NewsContent = {}
 
-  for (const selector in SELECTORS) {
+  for (const selector in options.SELECTORS) {
     // @ts-expect-error
-    const selectorElements = dom.querySelectorAll(SELECTORS[selector])
+    const selectorElements = dom.querySelectorAll(options.SELECTORS[selector])
 
     const list: string[] = []
     for (const element of selectorElements) {
@@ -28,12 +28,12 @@ async function getElements (dom: Document): Promise<NewsContent> {
 
 /** Return latest news containing title, content, image and last modified date. Construction of this scraper assumes that there are only 4 articles per page. While it's naive, bad HTML structure of the website makes it hard to do it in a better way. It should be validated & tested. */
 export default async function getNews (): Promise<News[]> {
-  const html = await JSDOM.fromURL(HOSTNAME)
+  const html = await JSDOM.fromURL(options.HOSTNAME)
   const dom = html.window.document
   const newsList: News[] = []
   const elements = await getElements(dom)
 
-  for (let i = 0; i < NEWS_PER_PAGE; i++) {
+  for (let i = 0; i < options.NEWS_PER_PAGE; i++) {
     const news: {[key: string]: string} = {}
     for (const [key, array] of Object.entries(elements)) {
       news[key] = array[i]
@@ -44,7 +44,7 @@ export default async function getNews (): Promise<News[]> {
     newsList.push(news)
   }
 
-  fs.writeFileSync(PATHS.news, JSON.stringify(newsList, null, 2))
+  fs.writeFileSync(options.PATHS.news, JSON.stringify(newsList, null, 2))
 
   return newsList
 }
