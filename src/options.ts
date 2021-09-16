@@ -1,7 +1,7 @@
 import { Command } from 'commander'
 
 const program = new Command()
-program.requiredOption('-u, --url <type>', 'Discord Webhook URL')
+program.option('-u, --url <type>', 'Discord Webhook URL')
 program.parse(process.argv)
 
 const options = {
