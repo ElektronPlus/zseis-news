@@ -2,20 +2,21 @@ import { MessageEmbed, WebhookClient } from 'discord.js'
 import { News } from './types'
 import fs from 'fs'
 import options from './options'
+import { writeObjectToFile } from './utils'
 
 const sentToDiscord = JSON.parse(fs.readFileSync(options.PATHS.sentToDiscord, 'utf8'))
 
 async function wasSentBefore(news: News): Promise<boolean> {
-  return (!sentToDiscord.md5.includes(news.md5))
+  return (sentToDiscord.md5.includes(news.md5))
 }
 
 async function setAsSent(news: News): Promise<void> {
-  sentToDiscord.md5.push(news.md5)
+  await sentToDiscord.md5.push(news.md5)
 }
 
 export default async function sendNewsByWebhook (newsList: News[], webhook: string): Promise<void> {
   for (const news of newsList) {
-    if (!wasSentBefore(news)) {
+    if (await wasSentBefore(news) == false) {
       const webhookClient = new WebhookClient({
         url: webhook
       })
@@ -34,6 +35,6 @@ export default async function sendNewsByWebhook (newsList: News[], webhook: stri
       setAsSent(news)
     }
   }
-}
 
-fs.writeFileSync(options.PATHS.sentToDiscord, JSON.stringify(sentToDiscord, null, 2))
+  writeObjectToFile(options.PATHS.sentToDiscord, sentToDiscord)
+}
