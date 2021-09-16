@@ -1,9 +1,5 @@
 # 🏫 zseis-news
-<center>
-  <a href="https://github.com/konhi/zseis-news/actions/workflows/main.yml">
-    <img src="https://github.com/konhi/zseis-news/actions/workflows/main.yml/badge.svg?branch=main"/>
-  </a>
-</center>
+[![Node.js CI](https://github.com/konhi/zseis-news/actions/workflows/main.yml/badge.svg)](https://github.com/konhi/zseis-news/actions/workflows/main.yml)
 
 ![image](https://user-images.githubusercontent.com/61631665/133658361-689edd85-8fc6-410b-9cc4-6d1e3a63a876.png)
 
