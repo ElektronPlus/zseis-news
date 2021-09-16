@@ -3,6 +3,7 @@ import options from './options'
 import { News, NewsContent } from './types'
 import fs from 'fs'
 import md5 from 'md5'
+import { writeObjectToFile } from './utils'
 
 // While every news can be accessed with a link, I didn't find a way to always find link/id to it. Technically it could be brute-forced but it doesn't seem to be most elegant way to do so.
 
@@ -44,7 +45,7 @@ export default async function getNews (): Promise<News[]> {
     newsList.push(news)
   }
 
-  fs.writeFileSync(options.PATHS.news, JSON.stringify(newsList, null, 2))
+  writeObjectToFile(options.PATHS.news, newsList)
 
   return newsList
 }
