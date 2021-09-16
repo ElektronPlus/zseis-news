@@ -23,11 +23,14 @@
   },
   "homepage": "https://github.com/konhi/zseis-news#readme",
   "dependencies": {
+    "commander": "^8.2.0",
     "discord.js": "^13.1.0",
-    "jsdom": "^17.0.0"
+    "jsdom": "^17.0.0",
+    "md5": "^2.3.0"
   },
   "devDependencies": {
     "@types/jsdom": "^16.2.13",
+    "@types/md5": "^2.3.1",
     "husky": "^7.0.2",
     "lint-staged": "^11.1.2",
     "ts-standard": "^10.0.0",

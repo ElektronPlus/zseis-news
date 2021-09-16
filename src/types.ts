@@ -1,5 +1,6 @@
 export interface News {
   title: string
+  md5: string
   content: string
   image: string
   dateModified: string
