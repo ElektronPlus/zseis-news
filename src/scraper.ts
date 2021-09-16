@@ -1,6 +1,7 @@
 import { JSDOM } from 'jsdom'
-import { NEWS_PER_PAGE, SELECTORS, HOSTNAME } from './options'
+import { NEWS_PER_PAGE, SELECTORS, HOSTNAME, PATHS } from './options'
 import { News, NewsContent } from './types'
+import fs from 'fs'
 import md5 from 'md5'
 
 // While every news can be accessed with a link, I didn't find a way to always find link/id to it. Technically it could be brute-forced but it doesn't seem to be most elegant way to do so.
@@ -42,5 +43,8 @@ export default async function getNews (): Promise<News[]> {
     // @ts-expect-error
     newsList.push(news)
   }
+
+  fs.writeFileSync(PATHS.news, JSON.stringify(newsList, null, 2))
+
   return newsList
 }
