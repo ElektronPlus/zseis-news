@@ -28,8 +28,8 @@ async function getElements (dom: Document): Promise<NewsContent> {
 }
 
 /** Return latest news containing title, content, image and last modified date. Construction of this scraper assumes that there are only 4 articles per page. While it's naive, bad HTML structure of the website makes it hard to do it in a better way. It should be validated & tested. */
-export default async function getNews (): Promise<News[]> {
-  const html = await JSDOM.fromURL(options.HOSTNAME)
+export default async function getNews (hostname = options.HOSTNAME): Promise<News[]> {
+  const html = await JSDOM.fromURL(hostname)
   const dom = html.window.document
   const newsList: News[] = []
   const elements = await getElements(dom)
