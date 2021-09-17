@@ -15,3 +15,4 @@ This doesn't require own hosting as it uses [:octocat: GitHub Actions](https://g
 4. [ ] Security
 5. [ ] Style, refactoring
 6. [ ] Logging, CLI
+7. [ ] Statistics
