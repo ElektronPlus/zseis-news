@@ -3,4 +3,4 @@ import sendNewsByWebhook from './discord'
 import options from './options'
 
 getNewsList()
-  .then(newsList => sendNewsByWebhook(newsList, options.user.url))
+  .then(async newsList => await sendNewsByWebhook(newsList, options.user.url))

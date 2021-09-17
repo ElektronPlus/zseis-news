@@ -30,7 +30,7 @@ const expectedNews = `[
     \"image\": \"https://konhi.me/zseis/gfx/logo_zseis.gif\",
     \"dateModified\": \"Ostatnio zmodyfikowany: 2021-09-07 10:02:47\"
   }
-]` 
+]`
 
 test('Mocked news as expected', async () => {
   const news = JSON.stringify(await getNews(MOCK), null, 2)
