@@ -1,7 +1,6 @@
 import { JSDOM } from 'jsdom'
 import options from './options'
 import { News, NewsContent } from './types'
-import fs from 'fs'
 import md5 from 'md5'
 import { writeObjectToFile } from './utils'
 
