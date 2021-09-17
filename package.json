@@ -5,7 +5,7 @@
   "main": "dist/main.js",
   "scripts": {
     "start": "npm run build && node dist/main.js",
-    "test": "npx ts-standard --fix",
+    "test": "jest",
     "build": "npx tsc",
     "dev": "npx tsc --watch",
     "prepare": "npx husky install",
