@@ -11,7 +11,7 @@ This doesn't require own hosting as it uses [:octocat: GitHub Actions](https://g
 
 1. [x] Scraper
 2. [x] Discord Webhook
-3. [ ] Tests
+3. [x] Tests
 4. [ ] Security
 5. [ ] Style, refactoring
 6. [ ] Logging, CLI
