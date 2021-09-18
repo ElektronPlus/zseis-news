@@ -1,50 +1,77 @@
 import { JSDOM } from 'jsdom'
 import options from './options'
-import { News, NewsContent } from './types'
 import md5 from 'md5'
-import { writeObjectToFile } from './utils'
+import { getDesiredElementContent } from './utils'
 
-// While every news can be accessed with a link, I didn't find a way to always find link/id to it. Technically it could be brute-forced but it doesn't seem to be most elegant way to do so.
+/**
+ * News scraper for `zseis.zgora.pl`
+ * @param {string} hostname - Custom hostname, useful for tests. You can use public mock at `https://konhi.me/zseis/zseis.html`
+ */
+export default class NewsScraper {
+  hostname: string
+  news: Promise<Array<{[key: string]: string}>>
 
-/** Return list of titles, content, image, and date */
-async function getElements (dom: Document): Promise<NewsContent> {
-  const elements: NewsContent = {}
-
-  for (const selector in options.SELECTORS) {
-    // @ts-expect-error
-    const selectorElements = dom.querySelectorAll(options.SELECTORS[selector])
-
-    const list: string[] = []
-    for (const element of selectorElements) {
-      const content = (selector === 'image') ? element.src : element.textContent
-      list.push(content)
-    }
-
-    elements[selector] = list
+  constructor (hostname: string = options.HOSTNAME) {
+    this.hostname = hostname
+    this.news = this.getNewsWithMD5()
   }
 
-  return elements
-}
+  /**
+   * Construction of this scraper assumes that there are only 4 articles per page. While it's naive, bad HTML structure of the website makes it hard to do it in a better way. It should be validated & tested.
+   * @return Array of 4 json objects including `[title, content, image, dateModified]`
+   * @example
+   * [
+      {
+        title: 'Pożegnanie Śp Heleny Szajkowskiej',
+        content: 'Z ogromnym smutkiem przyjęliśmy informację o śmierci naszej wieloletniej nauczycielki, Pani Heleny Szajkowskiej. W naszej pamięci pozostanie jej uśmiech i ciepło jakie dawała każdemu z nas.\n' +
+          'Uroczystości pogrzebowe odbędą się w najbliższy wtorek o 12.40 na starym cmentarzu przy ulicy Wrocławskiej w Zielonej Górze.\n' +
+          ' ',
+        image: 'https://zseis.zgora.pl/gfx/logo_zseis.gif',
+        dateModified: 'Ostatnio zmodyfikowany: 2021-09-17 18:20:11'
+      }... (3 news remaining),
+   */
+  async scrapeNews (): Promise<Array<{[key: string]: string}>> {
+    const dom = await this.dom
+    const news: Array<{[key: string]: string}> = []
 
-/** Return latest news containing title, content, image and last modified date. Construction of this scraper assumes that there are only 4 articles per page. While it's naive, bad HTML structure of the website makes it hard to do it in a better way. It should be validated & tested. */
-export default async function getNews (hostname = options.HOSTNAME): Promise<News[]> {
-  const html = await JSDOM.fromURL(hostname)
-  const dom = html.window.document
-  const newsList: News[] = []
-  const elements = await getElements(dom)
-
-  for (let i = 0; i < options.NEWS_PER_PAGE; i++) {
-    const news: {[key: string]: string} = {}
-    for (const [key, array] of Object.entries(elements)) {
-      news[key] = array[i]
-      news.md5 = md5(news.title + news.dateModified)
+    for (let i = 0; i < options.NEWS_PER_PAGE; i++) {
+      news[i] = {}
+      for (const [selectorName, selectorValue] of Object.entries(options.SELECTORS)) {
+        const element = dom.querySelectorAll(selectorValue)[i]
+        const content = await getDesiredElementContent(element)
+        Object.assign(news[i], { [selectorName]: content })
+      }
     }
 
-    // @ts-expect-error
-    newsList.push(news)
+    return news
   }
 
-  writeObjectToFile(options.PATHS.news, newsList)
+  /** Every news has ID, but I didn't find a way to get it. This function makes pseudo identificator to compensate it. It uses article title and dateModified.
+   * @return news like in scrapeNews() but with calculated md5
+   * @example
+   * [
+      {
+        title: 'Pożegnanie Śp Heleny Szajkowskiej',
+        content: 'Z ogromnym smutkiem przyjęliśmy informację o śmierci naszej wieloletniej nauczycielki, Pani Heleny Szajkowskiej. W naszej pamięci pozostanie jej uśmiech i ciepło jakie dawała każdemu z nas.\n' +
+          'Uroczystości pogrzebowe odbędą się w najbliższy wtorek o 12.40 na starym cmentarzu przy ulicy Wrocławskiej w Zielonej Górze.\n' +
+          ' ',
+        image: 'https://zseis.zgora.pl/gfx/logo_zseis.gif',
+        dateModified: 'Ostatnio zmodyfikowany: 2021-09-17 18:20:11',
+        md5: '36854c4fca2b047e8a47d384f7249625'
+      },
+   */
+  async getNewsWithMD5 (): Promise<Array<{[key: string]: string}>> {
+    const news = await this.scrapeNews()
 
-  return newsList
+    for (const [i, article] of news.entries()) {
+      news[i].md5 = md5(article.title + article.dateModified)
+    }
+
+    return news
+  }
+
+  /** @return {Promise<Document>} browser-like window.document */
+  get dom (): Promise<Document> {
+    return JSDOM.fromURL(this.hostname).then(html => html.window.document)
+  }
 }
