@@ -2,6 +2,7 @@ import { JSDOM } from 'jsdom'
 import options from './options'
 import md5 from 'md5'
 import { getDesiredElementContent } from './utils'
+import { News } from './types'
 
 /**
  * News scraper for `zseis.zgora.pl`
@@ -9,7 +10,7 @@ import { getDesiredElementContent } from './utils'
  */
 export default class NewsScraper {
   hostname: string
-  news: Promise<Array<{[key: string]: string}>>
+  news: Promise<News[]>
 
   constructor (hostname: string = options.HOSTNAME) {
     this.hostname = hostname
@@ -30,12 +31,12 @@ export default class NewsScraper {
         dateModified: 'Ostatnio zmodyfikowany: 2021-09-17 18:20:11'
       }... (3 news remaining),
    */
-  async scrapeNews (): Promise<Array<{[key: string]: string}>> {
+  async scrapeNews (): Promise<News[]> {
     const dom = await this.dom
-    const news: Array<{[key: string]: string}> = []
+    const news = [] as News[]
 
     for (let i = 0; i < options.NEWS_PER_PAGE; i++) {
-      news[i] = {}
+      news[i] = {} as News
       for (const [selectorName, selectorValue] of Object.entries(options.SELECTORS)) {
         const element = dom.querySelectorAll(selectorValue)[i]
         const content = await getDesiredElementContent(element)
@@ -60,7 +61,7 @@ export default class NewsScraper {
         md5: '36854c4fca2b047e8a47d384f7249625'
       },
    */
-  async getNewsWithMD5 (): Promise<Array<{[key: string]: string}>> {
+  async getNewsWithMD5 (): Promise<News[]> {
     const news = await this.scrapeNews()
 
     for (const [i, article] of news.entries()) {
