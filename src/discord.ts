@@ -14,7 +14,7 @@ async function setAsSent (news: News): Promise<void> {
 }
 
 export default async function sendNewsByWebhook (newsList: News[], webhook: string): Promise<void> {
-  process.env.WEBHOOK_URL = process.env.WEBHOOK_URL || webhook
+  process.env.WEBHOOK_URL = process.env.WEBHOOK_URL ?? webhook
 
   for (const news of newsList) {
     if (!await wasSentBefore(news)) {
