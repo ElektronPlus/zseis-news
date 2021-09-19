@@ -82,6 +82,5 @@ test('Scrape news from mocked site', async () => {
 test('Scrape news from mocked site and add md5', async () => {
   const scraper = new NewsScraper(MOCK)
   const news = await scraper.getNewsWithMD5()
-  console.log(news)
   expect(news).toBe(expectedNewsMD5)
 })
