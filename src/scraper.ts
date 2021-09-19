@@ -38,7 +38,9 @@ export default class NewsScraper {
     for (let i = 0; i < options.NEWS_PER_PAGE; i++) {
       news[i] = {} as News
       for (const [selectorName, selectorValue] of Object.entries(options.SELECTORS)) {
+        // @example `window.document.querySelectorAll('.news_title')[1]` => `Odznaczenia dla naszych nauczycieli`
         const element = dom.querySelectorAll(selectorValue)[i]
+
         const content = await getDesiredElementContent(element)
         Object.assign(news[i], { [selectorName]: content })
       }

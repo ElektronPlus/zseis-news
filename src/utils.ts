@@ -6,6 +6,8 @@ export async function writeObjectToFile (path: string, obj: object): Promise<voi
 
 /**
  * @param  {Element} element
+ * @example HTMLImageElement => 'https://zseis.zgora.pl/gfx/logo_zseis.gif'
+ * @example HTMLParagraphElement => 'Serdecznie zapraszamy zgłoszone osoby.'
  * @return image `src` or text `textContent`
  */
 export async function getDesiredElementContent (element: Element): Promise<string> {
