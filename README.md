@@ -7,6 +7,20 @@ Scrape news from [school site (https://zseis.zgora.pl/)](https://zseis.zgora.pl/
 
 This doesn't require own hosting as it uses [:octocat: GitHub Actions](https://github.com/konhi/zseis-news/actions).
 
+# 🔨 Developing
+```
+git clone https://github.com/konhi/zseis-news.git
+cd zseis-news
+echo WEBHOOK_URL="<>" > .env
+npm install
+```
+
+- `npm run start`: builds and runs the script
+- `npm run test`: code testing using jest
+- `npm run lint`: automatically fix problems and show style errors
+- `npm run dev`: TypeScript compiler watch for changes
+- `node dist/main.js`: run main program (without compiling)
+
 # 📃 Roadmap
 
 1. [x] Scraper
