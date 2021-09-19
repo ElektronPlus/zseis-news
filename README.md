@@ -11,7 +11,7 @@ This doesn't require own hosting as it uses [:octocat: GitHub Actions](https://g
 ```
 git clone https://github.com/konhi/zseis-news.git
 cd zseis-news
-echo WEBHOOK_URL="<>" > .env
+echo WEBHOOK_URL="<https://discord.com/api/webhooks/xxxxxxxxx/xxxxxxxxxxxxxxxxxxxxxxxxx" > .env
 npm install
 ```
 
