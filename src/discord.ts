@@ -13,13 +13,11 @@ async function setAsSent (news: News): Promise<void> {
   await sentToDiscord.md5.push(news.md5)
 }
 
-export default async function sendNewsByWebhook (newsList: News[], webhook: string): Promise<void> {
-  process.env.WEBHOOK_URL = process.env.WEBHOOK_URL ?? webhook
-
+export default async function sendNewsByWebhook (newsList: News[], webhook_url: string): Promise<void> {
   for (const news of newsList) {
     if (!await wasSentBefore(news)) {
       const webhookClient = new WebhookClient({
-        url: process.env.WEBHOOK_URL
+        url: webhook_url
       })
 
       const embed = new MessageEmbed()
