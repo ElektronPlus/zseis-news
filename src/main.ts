@@ -1,6 +1,5 @@
 import NewsScraper from './scraper'
 import sendNewsByWebhook from './discord'
-import options from './options'
 require('dotenv').config()
 
 
