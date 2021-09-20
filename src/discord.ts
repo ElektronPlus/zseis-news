@@ -4,26 +4,26 @@ import fs from 'fs'
 import options from './options'
 import { writeObjectToFile } from './utils'
 
-const sentToDiscord = JSON.parse(fs.readFileSync(options.PATHS.sentToDiscord, 'utf8'))
+const sentNews = JSON.parse(fs.readFileSync(options.paths.sentNews, 'utf8'))
 async function wasSentBefore (news: News): Promise<boolean> {
-  return (sentToDiscord.md5.includes(news.md5))
+  return (sentNews.md5.includes(news.md5))
 }
 
 async function setAsSent (news: News): Promise<void> {
-  await sentToDiscord.md5.push(news.md5)
+  await sentNews.md5.push(news.md5)
 }
 
-export default async function sendNewsByWebhook (newsList: News[], webhook_url: string): Promise<void> {
-  for (const news of newsList) {
+export default async function sendNewsByWebhook (newsGroup: News[], webhookURL: string): Promise<void> {
+  for (const news of newsGroup) {
     if (!await wasSentBefore(news)) {
       const webhookClient = new WebhookClient({
-        url: webhook_url
+        url: webhookURL
       })
 
       const embed = new MessageEmbed()
         .setTitle(news.title)
         .setDescription(news.content)
-        .setURL(options.HOSTNAME)
+        .setURL(options.defaultURL)
         .setFooter(news.dateModified)
         .setThumbnail(news.image)
 
@@ -35,5 +35,5 @@ export default async function sendNewsByWebhook (newsList: News[], webhook_url: 
     }
   }
 
-  writeObjectToFile(options.PATHS.sentToDiscord, sentToDiscord)
+  writeObjectToFile(options.paths.sentNews, sentNews)
 }

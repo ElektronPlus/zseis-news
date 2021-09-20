@@ -6,5 +6,5 @@ require('dotenv').config()
 if (process.env.WEBHOOK_URL) {
   const webhook_url = process.env.WEBHOOK_URL
   const scraper = new NewsScraper()
-  scraper.news.then(async news => await sendNewsByWebhook(news, webhook_url))
+  scraper.newsGroupWithMD5.then(async news => await sendNewsByWebhook(news, webhook_url))
 }

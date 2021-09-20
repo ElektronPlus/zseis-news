@@ -1,16 +1,16 @@
 const options = {
-  PATHS: {
+  paths: {
     news: 'data/news.json',
-    sentToDiscord: 'data/sentToDiscord.json'
+    sentNews: 'data/sentToDiscord.json'
   },
-  NEWS_PER_PAGE: 4,
-  SELECTORS: {
+  newsPerPage: 4,
+  selectors: {
     title: '.news_title',
     content: '.news_content_text',
     image: '.news_image img',
     dateModified: '.news_modtext'
   },
-  HOSTNAME: 'https://zseis.zgora.pl/',
+  defaultURL: 'https://zseis.zgora.pl/',
 }
 
 export default options

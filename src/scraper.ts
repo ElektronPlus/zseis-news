@@ -9,12 +9,12 @@ import { News } from './types'
  * @param {string} hostname - Custom hostname, useful for tests. You can use public mock at `https://konhi.me/zseis/zseis.html`
  */
 export default class NewsScraper {
-  hostname: string
-  news: Promise<News[]>
+  URL: string
+  newsGroupWithMD5: Promise<News[]>
 
-  constructor (hostname: string = options.HOSTNAME) {
-    this.hostname = hostname
-    this.news = this.getNewsWithMD5()
+  constructor (URL: string = options.defaultURL) {
+    this.URL = URL
+    this.newsGroupWithMD5 = this.getNewsWithMD5()
   }
 
   /**
@@ -35,9 +35,9 @@ export default class NewsScraper {
     const dom = await this.dom
     const news = [] as News[]
 
-    for (let i = 0; i < options.NEWS_PER_PAGE; i++) {
+    for (let i = 0; i < options.newsPerPage; i++) {
       news[i] = {} as News
-      for (const [selectorName, selectorValue] of Object.entries(options.SELECTORS)) {
+      for (const [selectorName, selectorValue] of Object.entries(options.selectors)) {
         // @example `window.document.querySelectorAll('.news_title')[1]` => `Odznaczenia dla naszych nauczycieli`
         const element = dom.querySelectorAll(selectorValue)[i]
 
@@ -64,17 +64,17 @@ export default class NewsScraper {
       },
    */
   async getNewsWithMD5 (): Promise<News[]> {
-    const news = await this.scrapeNews()
+    const newsGroupWithMD5 = await this.scrapeNews()
 
-    for (const [i, article] of news.entries()) {
-      news[i].md5 = md5(article.title + article.dateModified)
+    for (const [i, article] of newsGroupWithMD5.entries()) {
+      newsGroupWithMD5[i].md5 = md5(article.title + article.dateModified)
     }
 
-    return news
+    return newsGroupWithMD5
   }
 
   /** @return {Promise<Document>} browser-like window.document */
   get dom (): Promise<Document> {
-    return JSDOM.fromURL(this.hostname).then(html => html.window.document)
+    return JSDOM.fromURL(this.URL).then(html => html.window.document)
   }
 }
