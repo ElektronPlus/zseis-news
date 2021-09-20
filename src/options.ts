@@ -1,7 +1,7 @@
 const options = {
   paths: {
     news: 'data/news.json',
-    sentNews: 'data/sentToDiscord.json'
+    sentNews: 'data/sentNews.json'
   },
   newsPerPage: 4,
   selectors: {
