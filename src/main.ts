@@ -1,10 +1,11 @@
-import NewsScraper from './scraper'
+import scrapeNews from './scraper'
 import sendNewsByWebhook from './discord'
-require('dotenv').config()
+import dotenv from 'dotenv'
 
-
+dotenv.config()
 if (process.env.WEBHOOK_URL) {
-  const webhook_url = process.env.WEBHOOK_URL
-  const scraper = new NewsScraper()
-  scraper.newsGroupWithMD5.then(async news => await sendNewsByWebhook(news, webhook_url))
+  const webhookURL = process.env.WEBHOOK_URL
+
+  scrapeNews()
+    .then(news => sendNewsByWebhook(news, webhookURL))
 }

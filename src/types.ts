@@ -3,5 +3,4 @@ export interface News {
   content: string
   image: string
   dateModified: string
-  md5?: string
 }

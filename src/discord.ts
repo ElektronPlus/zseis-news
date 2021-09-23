@@ -1,39 +1,48 @@
+import md5 from "md5";
 import { MessageEmbed, WebhookClient } from 'discord.js'
-import { News } from './types'
+import { News } from "./types";
 import fs from 'fs'
 import options from './options'
-import { writeObjectToFile } from './utils'
 
-const sentNews = JSON.parse(fs.readFileSync(options.paths.sentNews, 'utf8'))
-async function wasSentBefore (news: News): Promise<boolean> {
-  return (sentNews.md5.includes(news.md5))
+const sentNews: {md5: string[]} = JSON.parse(fs.readFileSync(options.paths.sentNews, 'utf-8'))
+
+async function getNewsChecksum(entry: News) {
+  return md5(entry.title + entry.dateModified)
 }
 
-async function setAsSent (news: News): Promise<void> {
-  await sentNews.md5.push(news.md5)
+async function isAlreadySent(checksum: string) {
+  return sentNews.md5.includes(checksum)
 }
 
-export default async function sendNewsByWebhook (newsGroup: News[], webhookURL: string): Promise<void> {
-  for (const news of newsGroup) {
-    if (!await wasSentBefore(news)) {
-      const webhookClient = new WebhookClient({
-        url: webhookURL
-      })
+async function prepareMessage(entry: News): Promise<MessageEmbed> {
+  return new MessageEmbed()
+    .setTitle(entry.title)
+    .setDescription(entry.content)
+    .setURL(options.defaultURL)
+    .setFooter(entry.dateModified)
+    .setThumbnail(entry.image)
+    .setColor('#457dd9')
+}
 
-      const embed = new MessageEmbed()
-        .setTitle(news.title)
-        .setDescription(news.content)
-        .setURL(options.defaultURL)
-        .setFooter(news.dateModified)
-        .setThumbnail(news.image)
+async function updateSentNews(md5: string) {
+  sentNews.md5.push(md5)
+  fs.writeFileSync(options.paths.sentNews, JSON.stringify(sentNews, null, 2), 'utf8')
+}
 
-      webhookClient.send({
-        embeds: [embed]
-      })
+export default async function sendNewsByWebhook(news: News[], webhookURL: string) {
+  const webhookClient = new WebhookClient({
+    url: webhookURL
+  })
 
-      setAsSent(news)
+  for (const entry of news) {
+    const checksum = await getNewsChecksum(entry)
+    if (await isAlreadySent(checksum) == false) {
+      prepareMessage(entry)
+        .then(message => webhookClient.send({
+            embeds: [message]
+        }))
+
+      updateSentNews(checksum)
     }
   }
-
-  writeObjectToFile(options.paths.sentNews, sentNews)
 }
