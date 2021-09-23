@@ -1,3 +1,11 @@
 import scrapeNews from './scraper'
+import sendNewsByWebhook from './discord'
+import dotenv from 'dotenv'
 
-scrapeNews()
+dotenv.config()
+if (process.env.WEBHOOK_URL) {
+  const webhookURL = process.env.WEBHOOK_URL
+
+  scrapeNews()
+    .then(news => sendNewsByWebhook(news, webhookURL))
+}
