@@ -15,13 +15,18 @@ async function isAlreadySent(checksum: string) {
 }
 
 async function prepareMessage(entry: News): Promise<MessageEmbed> {
-  return new MessageEmbed()
+  let embed = new MessageEmbed()
     .setTitle(entry.title)
     .setDescription(entry.content)
     .setURL(options.defaultURL)
     .setFooter(entry.dateModified)
-    .setThumbnail(entry.image)
     .setColor('#457dd9')
+
+  if (entry.image != 'https://zseis.zgora.pl/gfx/logo_zseis.gif') {
+    embed.setImage(entry.image)
+  }
+
+  return embed
 }
 
 async function updateSentNews(md5: string) {
