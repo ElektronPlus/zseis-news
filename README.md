@@ -9,7 +9,7 @@ Scrape news from [school site (https://zseis.zgora.pl/)](https://zseis.zgora.pl/
 This doesn't require own hosting as it uses [:octocat: GitHub Actions](https://github.com/konhi/zseis-news/actions).
 
 # 📐 Technical info
-- You can't get id of entry in easy way (to my knowledge other than brute-forcing), so script generates a checksum (`md5(title + dateModified)) to check what news were already sent to Discord
+- You can't get id of entry in easy way (to my knowledge other than brute-forcing), so script generates a checksum (`md5(title + dateModified)`) to check what news were already sent to Discord
 - Script has hard-coded that there are 4 news per page and will throw error if will find more, this is due to not well structured HTML of website. This also leads to news extracter seem to be a bit unintuitive.
 - It uses Discord Webhooks and requires function in other bot to crosspost on announcement channel.
 
