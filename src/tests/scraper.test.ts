@@ -19,11 +19,11 @@ test('Has 4 news', async () => {
 
 test('Has only title, content, image and dateModified', async () => {
   // https://www.30secondsofcode.org/articles/s/javascript-array-comparison
-  const arrayEquals = (a: string[], b: string[]) => a.length === b.length && a.every((v, i) => v === b[i]);
+  const arrayEquals = (a: string[], b: string[]): boolean => a.length === b.length && a.every((v, i) => v === b[i])
 
   const news = await scrapeNews()
   for (const entry of news) {
-    expect(arrayEquals(Object.keys(entry), [ 'title', 'content', 'image', 'dateModified' ])).toBeTruthy()
+    expect(arrayEquals(Object.keys(entry), ['title', 'content', 'image', 'dateModified'])).toBeTruthy()
   }
 })
 

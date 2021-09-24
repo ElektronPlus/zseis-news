@@ -7,5 +7,5 @@ if (process.env.WEBHOOK_URL) {
   const webhookURL = process.env.WEBHOOK_URL
 
   scrapeNews()
-    .then(news => sendNewsByWebhook(news, webhookURL))
+    .then(async news => await sendNewsByWebhook(news, webhookURL))
 }

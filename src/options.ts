@@ -11,6 +11,7 @@ const options = {
     dateModified: '.news_modtext'
   },
   defaultURL: 'https://zseis.zgora.pl/',
+  defaultImage: 'https://zseis.zgora.pl/gfx/logo_zseis.gif'
 }
 
 export default options

@@ -1,6 +1,6 @@
-import { JSDOM } from "jsdom";
-import options from "./options";
-import { News } from "./types";
+import { JSDOM } from 'jsdom'
+import options from './options'
+import { News } from './types'
 
 /**
  * @param {Document} dom like `window.document` in browser, you can get it from `JSDOM`
@@ -8,15 +8,15 @@ import { News } from "./types";
     .then(html => html.window.document)
     .then(dom => extractNews(dom))
 */
-async function extractNews(dom: Document): Promise<News[]> {
+async function extractNews (dom: Document): Promise<News[]> {
   // Assumes that there will be only 4 news per page. While it's naive, bad HTML structure of the website makes it hard to do it in a better way. If there will be more elements, this function will throw an error.
-  let news = [{}, {}, {}, {}];
+  const news = [{}, {}, {}, {}]
 
   for (const [selector, value] of Object.entries(options.selectors)) {
     // Assign extracted attribute content to specific news. This may look unintuitive as website's structure isn't really well structured and tree-like (e.g. title is in different container than content)
     dom.querySelectorAll(value).forEach((element, i) => {
-      const desiredAttribute = (element.tagName === "IMG") ? 'src' : 'textContent'
-      // @ts-ignore
+      const desiredAttribute = (element.tagName === 'IMG') ? 'src' : 'textContent'
+      // @ts-expect-error
       Object.assign(news[i], { [selector]: element[desiredAttribute] })
     })
   }
@@ -35,8 +35,8 @@ async function extractNews(dom: Document): Promise<News[]> {
     dateModified: 'Ostatnio zmodyfikowany: 2021-09-16 08:56:13'
   }... (3 news remaining)`
  */
-export default async function scrapeNews(url = options.defaultURL): Promise<News[]> {
-  return JSDOM.fromURL(url)
+export default async function scrapeNews (url = options.defaultURL): Promise<News[]> {
+  return await JSDOM.fromURL(url)
     .then(html => html.window.document)
-    .then(dom => extractNews(dom))
+    .then(async dom => await extractNews(dom))
 }
