@@ -1,6 +1,6 @@
 # 🏫 zseis-news
 [![Node.js CI](https://github.com/konhi/zseis-news/actions/workflows/main.yml/badge.svg)](https://github.com/konhi/zseis-news/actions/workflows/main.yml)
-[![codecov](https://codecov.io/gh/konhi/zseis-news/branch/main/graph/badge.svg?token=NPTXGNKXY2)](https://codecov.io/gh/konhi/zseis-news)
+[![codecov](https://codecov.io/gh/ElektronPlus/zseis-news/branch/main/graph/badge.svg?token=NPTXGNKXY2)](https://codecov.io/gh/ElektronPlus/zseis-news)
 
 ![image](https://user-images.githubusercontent.com/61631665/133680785-7651f9b2-d674-4d72-992c-4fc3dffe6513.png)
 
