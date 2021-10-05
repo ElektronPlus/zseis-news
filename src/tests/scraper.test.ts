@@ -23,7 +23,7 @@ test('Has only title, content, image and dateModified', async () => {
 
   const news = await scrapeNews()
   for (const entry of news) {
-    expect(arrayEquals(Object.keys(entry), ['title', 'content', 'image', 'dateModified'])).toBeTruthy()
+    expect(arrayEquals(Object.keys(entry), ['title', 'content', 'html', 'image', 'dateModified'])).toBeTruthy()
   }
 })
 

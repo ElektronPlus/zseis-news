@@ -5,10 +5,26 @@ const options = {
   },
   newsPerPage: 4,
   selectors: {
-    title: '.news_title',
-    content: '.news_content_text',
-    image: '.news_image img',
-    dateModified: '.news_modtext'
+    title: {
+      css: '.news_title',
+      attribute: 'textContent'
+    },
+    content: {
+      css: '.news_content_text',
+      attribute: 'textContent'
+    },
+    html: {
+      css: '.news_content_text',
+      attribute: 'innerHTML'
+    },
+    image: {
+      css: '.news_image img',
+      attribute: 'src'
+    },
+    dateModified: {
+      css: '.news_modtext',
+      attribute: 'textContent'
+    }
   },
   defaultURL: 'https://zseis.zgora.pl/',
   defaultImage: 'https://zseis.zgora.pl/gfx/logo_zseis.gif'

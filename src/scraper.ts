@@ -14,10 +14,9 @@ async function extractNews (dom: Document): Promise<News[]> {
 
   for (const [selector, value] of Object.entries(options.selectors)) {
     // Assign extracted attribute content to specific news. This may look unintuitive as website's structure isn't really well structured and tree-like (e.g. title is in different container than content)
-    dom.querySelectorAll(value).forEach((element, i) => {
-      const desiredAttribute = (element.tagName === 'IMG') ? 'src' : 'textContent'
+    dom.querySelectorAll(value.css).forEach((element, i) => {
       // @ts-expect-error
-      Object.assign(news[i], { [selector]: element[desiredAttribute] })
+      Object.assign(news[i], { [selector]: element[value.attribute] })
     })
   }
 

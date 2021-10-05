@@ -6,18 +6,23 @@ import options from './options'
 
 const sentNews: {md5: string[]} = JSON.parse(fs.readFileSync(options.paths.sentNews, 'utf-8'))
 
-async function getNewsChecksum (entry: News): Promise<string> {
+/** Get md5 of (title + dateModified) in order to create pseudo-id in order to identify a single entry. I couldn't find a way to scrape real id of the entry from the website. */
+function getNewsChecksum (entry: News): string {
   return md5(entry.title + entry.dateModified)
 }
 
-async function isAlreadySent (checksum: string): Promise<boolean> {
+/** Check if specific entry was already sent to Discord. If title or dateModified is going to be changed, the entry will be resent. */
+function isAlreadySent (checksum: string): boolean {
   return sentNews.md5.includes(checksum)
 }
 
-async function prepareMessage (entry: News): Promise<MessageEmbed> {
+/** Return pretty Discord Embed. */
+function prepareMessage (entry: News): MessageEmbed {
+  const description = entry.md ?? entry.content
+
   const embed = new MessageEmbed()
     .setTitle(entry.title)
-    .setDescription(entry.content)
+    .setDescription(description)
     .setURL(options.defaultURL)
     .setFooter(entry.dateModified)
     .setColor('#457dd9')
@@ -29,7 +34,8 @@ async function prepareMessage (entry: News): Promise<MessageEmbed> {
   return embed
 }
 
-async function updateSentNews (md5: string): Promise<void> {
+/** Write md5 to json */
+function updateSentNews (md5: string): void {
   sentNews.md5.push(md5)
   fs.writeFileSync(options.paths.sentNews, JSON.stringify(sentNews, null, 2), 'utf8')
 }
@@ -40,14 +46,14 @@ export default async function sendNewsByWebhook (news: News[], webhookURL: strin
   })
 
   for (const entry of news) {
-    const checksum = await getNewsChecksum(entry)
-    if (!await isAlreadySent(checksum)) {
-      await prepareMessage(entry)
-        .then(async message => await webhookClient.send({
-          embeds: [message]
-        }))
+    const checksum = getNewsChecksum(entry)
 
-      await updateSentNews(checksum)
+    if (!isAlreadySent(checksum)) {
+      webhookClient.send({
+          embeds: [prepareMessage(entry)]
+        })
+
+      updateSentNews(checksum)
     }
   }
 }
