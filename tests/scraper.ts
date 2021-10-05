@@ -4,7 +4,7 @@ import fs from 'fs'
 const mockURL = 'https://konhi.me/zseis/zseis.html'
 
 const expectedData = {
-  mock: fs.readFileSync('./tests/expected/news.json', 'utf-8')
+  mock: fs.readFileSync('./tests/fixtures/news.json', 'utf-8')
 }
 
 test('Data from mock as expected', async () => {
