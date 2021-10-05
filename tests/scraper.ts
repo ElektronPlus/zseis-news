@@ -1,10 +1,10 @@
-import scrapeNews from '../scraper'
+import scrapeNews from '../src/scraper'
 import fs from 'fs'
 
 const mockURL = 'https://konhi.me/zseis/zseis.html'
 
 const expectedData = {
-  mock: fs.readFileSync('src/tests/expected/news.json', 'utf-8')
+  mock: fs.readFileSync('./tests/expected/news.json', 'utf-8')
 }
 
 test('Data from mock as expected', async () => {
