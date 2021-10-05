@@ -30,7 +30,7 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build
-    - run: node dist/main.js
+    - run: node dist/src/main.js
     - run: |-
         git diff
         git config --global user.email "actions@users.noreply.github.com"
