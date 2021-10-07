@@ -1,12 +1,20 @@
-# 🏫 zseis-news
-[![Node.js CI](https://github.com/konhi/zseis-news/actions/workflows/main.yml/badge.svg)](https://github.com/konhi/zseis-news/actions/workflows/main.yml)
-[![codecov](https://codecov.io/gh/ElektronPlus/zseis-news/branch/main/graph/badge.svg?token=NPTXGNKXY2)](https://codecov.io/gh/ElektronPlus/zseis-news)
 
-![image](https://user-images.githubusercontent.com/61631665/133680785-7651f9b2-d674-4d72-992c-4fc3dffe6513.png)
+<div align="center">
+<img src="https://user-images.githubusercontent.com/61631665/133680785-7651f9b2-d674-4d72-992c-4fc3dffe6513.png">
+<h2>News scraper and publisher for zseis.zgora.pl</h2>
+<a href="https://github.com/konhi/zseis-news/actions/workflows/main.yml">
+  <img src="https://github.com/konhi/zseis-news/actions/workflows/main.yml/badge.svg">
+</a>
+<a href="https://codecov.io/gh/ElektronPlus/zseis-newsl">
+  <img src="https://codecov.io/gh/ElektronPlus/zseis-news/branch/main/graph/badge.svg?token=NPTXGNKXY2">
+</a>
+</div>
 
-Scrape news from [school site (https://zseis.zgora.pl/)](https://zseis.zgora.pl/) and send them throught Discord!
+---
 
-This doesn't require own hosting as it uses [:octocat: GitHub Actions](https://github.com/konhi/zseis-news/actions).
+- scrape news from [🌐 school site (https://zseis.zgora.pl/)](https://zseis.zgora.pl/)
+- send them trought [🐱‍💻 Discord Webhooks](https://discord.com/developers/docs/resources/webhook)
+- doesn't require hosting as it uses [:octocat: GitHub Actions](https://github.com/konhi/zseis-news/actions)
 
 # 📐 Technical info
 - You can't get id of entry in easy way (to my knowledge other than brute-forcing), so script generates a checksum (`md5(title + dateModified)`) to check what news were already sent to Discord
