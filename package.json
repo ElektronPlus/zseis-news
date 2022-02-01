@@ -2,9 +2,9 @@
   "name": "zseis-news",
   "version": "1.0.0",
   "description": "🏫 Fetch news from zseis.zgora.pl and distribute them!",
-  "main": "dist/main.js",
+  "main": "dist/src/main.js",
   "scripts": {
-    "start": "npm run build && node dist/main.js",
+    "start": "npm run build && node dist/src/main.js",
     "test": "jest",
     "build": "npx tsc",
     "dev": "npx tsc --watch",

@@ -10,11 +10,11 @@ const options = {
       attribute: 'textContent'
     },
     content: {
-      css: '.news_content_text',
+      css: '.news_content',
       attribute: 'textContent'
     },
     html: {
-      css: '.news_content_text',
+      css: '.news_content',
       attribute: 'innerHTML'
     },
     image: {
